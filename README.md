@@ -27,7 +27,9 @@ the chips**.
   a bus seed their search from every cell the bus already routed (cost ~0), so
   branches leave the trunk at the optimal point. `exitCost` prices opening a
   *new* trunk out of a source: raise it to force merges even over shorter
-  direct paths.
+  direct paths. **Color follows the bus**: a bus shares geometry, so every
+  edge in it should render the same color — if you color per target, split
+  the buses along the same lines (`bus: colorGroupOf(target)`).
 - **Endpoints are exclusive** — two buses never share a start/goal cell, so
   stubs and arrowheads never stack.
 - **Nothing is dropped** — if a dense node row walls the grid off, a desperate

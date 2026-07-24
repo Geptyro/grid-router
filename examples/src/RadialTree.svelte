@@ -38,7 +38,9 @@
 			const bid = `b${i}`;
 			const p = polar(R1, a);
 			nodes.push({ id: bid, label: branchLabel, x: p.x, y: p.y, branch: i });
-			edges.push({ id: `e-${bid}`, source: 'root', target: bid });
+			// bus per LIMB: color follows the bus — root edges must not share one
+			// bus, or differently-colored limbs would merge trunks
+			edges.push({ id: `e-${bid}`, source: 'root', target: bid, bus: bid });
 			// leaves fan inside the branch's angular window on the outer ring
 			const win = ((2 * Math.PI) / N) * 0.72;
 			leaves.forEach((leafLabel, j) => {
@@ -93,12 +95,13 @@
 	// hover: an edge lights its bus; a node lights every bus touching it
 	let hoveredBus = $state<string | undefined>(undefined);
 	let hoveredNode = $state<string | undefined>(undefined);
+	const busKey = (e: GridEdge) => `${e.source}|${e.bus ?? ''}`;
 	const activeBuses = $derived.by(() => {
 		const s = new Set<string>();
 		if (hoveredBus) s.add(hoveredBus);
 		else if (hoveredNode) {
 			for (const e of tree.edges) {
-				if (e.source === hoveredNode || e.target === hoveredNode) s.add(`${e.source}|`);
+				if (e.source === hoveredNode || e.target === hoveredNode) s.add(busKey(e));
 			}
 		}
 		return s;
@@ -108,7 +111,7 @@
 		const s = new Set<string>();
 		if (hoveredNode) s.add(hoveredNode);
 		for (const e of tree.edges) {
-			if (activeBuses.has(`${e.source}|`)) {
+			if (activeBuses.has(busKey(e))) {
 				s.add(e.source);
 				s.add(e.target);
 			}

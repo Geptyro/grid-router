@@ -49,8 +49,15 @@
 		sales: '#c2842f'
 	};
 	const people = new Map(LEVELS.flat().map((p) => [p.id, p]));
+	// bus per (manager, department): color follows the bus — the CEO's lines to
+	// three differently-colored VPs must not share one trunk
 	const edges: GridEdge[] = Object.entries(REPORTS).flatMap(([mgr, reports]) =>
-		reports.map((r) => ({ id: `${mgr}-${r}`, source: mgr, target: r }))
+		reports.map((r) => ({
+			id: `${mgr}-${r}`,
+			source: mgr,
+			target: r,
+			bus: people.get(r)?.dept ?? ''
+		}))
 	);
 
 	// knobs (example defaults)
@@ -66,12 +73,13 @@
 	// and manager
 	let hoveredBus = $state<string | undefined>(undefined);
 	let hoveredNode = $state<string | undefined>(undefined);
+	const busKey = (e: GridEdge) => `${e.source}|${e.bus ?? ''}`;
 	const activeBuses = $derived.by(() => {
 		const s = new Set<string>();
 		if (hoveredBus) s.add(hoveredBus);
 		else if (hoveredNode) {
 			for (const e of edges) {
-				if (e.source === hoveredNode || e.target === hoveredNode) s.add(`${e.source}|`);
+				if (e.source === hoveredNode || e.target === hoveredNode) s.add(busKey(e));
 			}
 		}
 		return s;
@@ -81,7 +89,7 @@
 		const s = new Set<string>();
 		if (hoveredNode) s.add(hoveredNode);
 		for (const e of edges) {
-			if (activeBuses.has(`${e.source}|`)) {
+			if (activeBuses.has(busKey(e))) {
 				s.add(e.source);
 				s.add(e.target);
 			}
