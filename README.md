@@ -5,6 +5,12 @@ per-direction cell occupancy, Steiner-style bus joins, and crossing "hops".
 Framework-free core + an optional Svelte 5 canvas where **the consumer owns
 the chips**.
 
+**[Live examples →](https://geptyro.github.io/grid-router/)**
+
+| Schematic with named ports | Org chart | Oil & gas + cost layers |
+| --- | --- | --- |
+| ![Electronic circuit example: real schematic symbols with positioned named ports](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/circuit.png) | ![Org chart example: reporting lines merge into buses per manager](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/org-chart.png) | ![Oil & gas pipeline example: product buses detouring around a keep-out zone](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/pipeline.png) |
+
 ## Concepts
 
 - **Grid & occupancy** — the canvas is rasterized into square cells
@@ -112,19 +118,23 @@ to your panel background so crossing hops cut with the right color.
 
 ## Examples
 
+Live at **https://geptyro.github.io/grid-router/**, or locally:
+
 ```sh
 cd examples && npm install && npm run dev   # http://localhost:5200
 ```
 
-- **Electronic circuit** — nets as buses (VCC/GND rails share trunks), no
+- **Electronic circuit** — real schematic symbols with POSITIONED NAMED PORTS
+  (`bat:+`, `mcu:pb0` — tiny registered pads at the lead tips; the body is
+  just an obstacle); nets as buses (VCC/GND rails share trunks), no
   arrowheads (`arrowAt: 'none'`), hover a wire to trace its whole net.
-- **Org chart** — one bus per manager, reporting lines merge; hover a line to
-  light the whole team.
-- **Pipeline + cost layers** — absolutely-positioned left→right DAG; toggle a
-  maintenance keep-out zone (`costRegions`) and watch routes detour, or hit
-  *randomize layout* — chips scatter and the router re-routes live (the
-  `revision` prop triggers re-measure when chips move without resizing the
-  canvas).
+- **Org chart** — one bus per manager, reporting lines merge; hover a line or
+  a person to light the whole team.
+- **Oil & gas + cost layers** — absolutely-positioned network, buses per
+  product; toggle a maintenance keep-out zone (`keepOutLayer`) and watch the
+  flows detour, or hit *randomize layout* — chips scatter and the router
+  re-routes live (the `revision` prop triggers re-measure when chips move
+  without resizing the canvas).
 
 ## Development
 
