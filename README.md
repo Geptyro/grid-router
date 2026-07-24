@@ -7,9 +7,13 @@ the chips**.
 
 **[Live examples →](https://geptyro.github.io/grid-router/)**
 
-| Schematic with named ports | Org chart | Oil & gas + cost layers |
-| --- | --- | --- |
-| ![Electronic circuit example: real schematic symbols with positioned named ports](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/circuit.png) | ![Org chart example: reporting lines merge into buses per manager](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/org-chart.png) | ![Oil & gas pipeline example: product buses detouring around a keep-out zone](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/pipeline.png) |
+| Schematic with named ports | Org chart |
+| --- | --- |
+| ![Electronic circuit example: real schematic symbols with positioned named ports](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/circuit.png) | ![Org chart example: reporting lines merge into buses per manager](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/org-chart.png) |
+
+| Oil & gas + cost layers | Radial tree |
+| --- | --- |
+| ![Oil & gas pipeline example: product buses detouring around a keep-out zone](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/pipeline.png) | ![Radial tree example: root at the center, color-coded limbs radiating in all directions](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/radial-tree.png) |
 
 ## Concepts
 
@@ -135,6 +139,10 @@ cd examples && npm install && npm run dev   # http://localhost:5200
   flows detour, or hit *randomize layout* — chips scatter and the router
   re-routes live (the `revision` prop triggers re-measure when chips move
   without resizing the canvas).
+- **Radial tree** — a mind map: root at the CENTER, color-coded limbs
+  radiating in all directions via polar placement; each parent's children are
+  one bus, so limbs fuse near the trunk (drive it with the merge knob).
+  *Randomize tree* regenerates the whole topology.
 
 ## Development
 

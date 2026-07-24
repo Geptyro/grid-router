@@ -2,11 +2,13 @@
 	import Circuit from './Circuit.svelte';
 	import OrgChart from './OrgChart.svelte';
 	import Pipeline from './Pipeline.svelte';
+	import RadialTree from './RadialTree.svelte';
 
 	const TABS = [
 		{ key: 'circuit', title: 'Electronic circuit' },
 		{ key: 'org', title: 'Org chart' },
-		{ key: 'pipeline', title: 'Pipeline + cost layers' }
+		{ key: 'pipeline', title: 'Pipeline + cost layers' },
+		{ key: 'radial', title: 'Radial tree' }
 	] as const;
 	let tab = $state<(typeof TABS)[number]['key']>('circuit');
 </script>
@@ -25,8 +27,10 @@
 		<Circuit />
 	{:else if tab === 'org'}
 		<OrgChart />
-	{:else}
+	{:else if tab === 'pipeline'}
 		<Pipeline />
+	{:else}
+		<RadialTree />
 	{/if}
 </main>
 
