@@ -1,0 +1,54 @@
+{
+	"name": "grid-router",
+	"version": "0.1.0",
+	"description": "Orthogonal edge routing on a grid: A* with per-direction cell occupancy, Steiner-style bus joins and crossing hops — plus an optional Svelte canvas where the consumer owns the chips.",
+	"license": "MIT",
+	"author": "Geptyro",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Geptyro/grid-router.git"
+	},
+	"homepage": "https://geptyro.github.io/grid-router/",
+	"keywords": [
+		"routing",
+		"orthogonal",
+		"edge-routing",
+		"diagram",
+		"astar",
+		"svelte"
+	],
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./svelte": {
+			"types": "./src/svelte/index.ts",
+			"svelte": "./src/svelte/index.ts",
+			"default": "./src/svelte/index.ts"
+		}
+	},
+	"files": [
+		"dist",
+		"src"
+	],
+	"scripts": {
+		"build": "tsc",
+		"test": "vitest run",
+		"check": "tsc --noEmit",
+		"prepublishOnly": "npm test && npm run build"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"peerDependenciesMeta": {
+		"svelte": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"typescript": "^5.6.0",
+		"vitest": "^2.1.0"
+	}
+}
