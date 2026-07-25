@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Circuit from './Circuit.svelte';
+	import MissionFlow from './MissionFlow.svelte';
 	import OrgChart from './OrgChart.svelte';
 	import Pipeline from './Pipeline.svelte';
 	import RadialTree from './RadialTree.svelte';
@@ -8,7 +9,8 @@
 		{ key: 'circuit', title: 'Electronic circuit' },
 		{ key: 'org', title: 'Org chart' },
 		{ key: 'pipeline', title: 'Pipeline + cost layers' },
-		{ key: 'radial', title: 'Radial tree' }
+		{ key: 'radial', title: 'Radial tree' },
+		{ key: 'mission', title: 'Mission flow (real data)' }
 	] as const;
 	let tab = $state<(typeof TABS)[number]['key']>('circuit');
 </script>
@@ -29,8 +31,10 @@
 		<OrgChart />
 	{:else if tab === 'pipeline'}
 		<Pipeline />
-	{:else}
+	{:else if tab === 'radial'}
 		<RadialTree />
+	{:else}
+		<MissionFlow />
 	{/if}
 </main>
 

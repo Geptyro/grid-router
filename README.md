@@ -15,6 +15,10 @@ the chips**.
 | --- | --- |
 | ![Oil & gas pipeline example: product buses detouring around a keep-out zone](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/pipeline.png) | ![Radial tree example: root at the center, color-coded limbs radiating in all directions](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/radial-tree.png) |
 
+| Mission flow — real data, 40+ buses into one hub chip |
+| --- |
+| ![Mission flow example: the trigger graph of a StarCraft II arcade map; dozens of enable/disable buses converge on one timer chip, seated violation-free on an 8px grid](https://raw.githubusercontent.com/Geptyro/grid-router/main/docs/mission-flow.png) |
+
 ## Concepts
 
 - **Grid & occupancy** — the canvas is rasterized into square cells
@@ -31,7 +35,11 @@ the chips**.
   edge in it should render the same color — if you color per target, split
   the buses along the same lines (`bus: colorGroupOf(target)`).
 - **Endpoints are exclusive** — two buses never share a start/goal cell, so
-  stubs and arrowheads never stack.
+  stubs and arrowheads never stack. This caps a chip's connection capacity at
+  roughly its perimeter in cells (~2·(w+h)/res): a hub collecting more buses
+  than that exhausts its ring and degrades into violations. Corridor gaps
+  can't grow a ring — a finer `res` can (the mission-flow example seats a
+  40-bus hub at 8px that overflows at 12px).
 - **Nothing is dropped** — if a dense node row walls the grid off, a desperate
   pass routes through obstacles at a huge cost and the result counts it in
   `violations`. **`violations > 0` is a layout problem, not a router bug**:
