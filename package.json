@@ -1,6 +1,6 @@
 {
 	"name": "grid-router",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Orthogonal edge routing on a grid: A* with per-direction cell occupancy, Steiner-style bus joins and crossing hops — plus an optional Svelte canvas where the consumer owns the chips.",
 	"license": "MIT",
 	"author": "Geptyro",

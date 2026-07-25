@@ -122,15 +122,22 @@
 				cy: r.top - base.top + r.height / 2
 			});
 		}
+		// The grid must cover chips that OVERFLOW the canvas horizontally (a
+		// scrolling consumer clips base.width to the viewport): an off-grid chip
+		// gets its ring clamped onto the last on-grid column, where the stacked
+		// stubs collide as lane violations. Route the full content extent plus a
+		// routable side margin, so the rightmost chips keep an outer corridor.
+		const contentRight = Math.max(0, ...[...boxes.values()].map((b) => b.r));
+		const w = Math.max(base.width, Math.ceil(contentRight + gaps.sidePad));
 		const t0 = performance.now();
-		const routed = routeGrid(boxes, edges, base.width, canvas.scrollHeight + extraHeight, opts);
+		const routed = routeGrid(boxes, edges, w, canvas.scrollHeight + extraHeight, opts);
 		const ms = Math.round((performance.now() - t0) * 10) / 10;
 		conns = routed.conns;
 		violations = routed.violations;
 		debugCells = routed.debug.cells;
 		const contentBottom = Math.max(0, ...[...boxes.values()].map((b) => b.b));
 		overhang = Math.max(16, Math.ceil(routed.bottom - contentBottom + 10));
-		svgW = base.width;
+		svgW = w;
 		svgH = Math.max(canvas.scrollHeight, Math.ceil(routed.bottom + 10));
 		onrouted?.({ conns: routed.conns, violations: routed.violations, ms });
 	}
